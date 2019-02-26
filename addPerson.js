@@ -33,7 +33,7 @@ const addPerson = (args) => {
 }
 
 const outputText = (arr) => {
-  console.log(`Found ${arr.length} person(s) by the name '${args[0]}'`);
+  console.log(`Added ${arr.length} person`);
   for (const i in arr) {
     console.log(`  -  ${arr[i].first_name} ${arr[i].last_name}, born ${arr[i].birthdate}`);
   }
