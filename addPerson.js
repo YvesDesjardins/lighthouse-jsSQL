@@ -14,14 +14,21 @@ const pg = require('knex')({
 });
 const args = process.argv.slice(2);
 
-const searchPerson = (name) => {
-  knex.select('*').from('famous_people').where('first_name', 'LIKE', name).orWhere('last_name', 'LIKE', name)
+const addPerson = (args) => {
+  knex('famous_people').insert({
+      first_name: args[0],
+      last_name: args[1],
+      birthdate: new Date(args[2])
+    })
+    .returning('*')
     .then((res) => {
       outputText(res);
-      // return res;
     })
     .catch((err) => {
       throw err;
+    })
+    .finally(function () {
+      knex.destroy();
     });
 }
 
@@ -33,8 +40,7 @@ const outputText = (arr) => {
 }
 
 const runProgram = (args) => {
-  let arr = searchPerson(args[0]);
-  // outputText(arr);
+  let arr = addPerson(args);
 }
 
 runProgram(args);
