@@ -7,15 +7,11 @@ const knex = require('knex')({
     database: 'test_db'
   }
 });
-const pg = require('knex')({
-  client: 'pg',
-  connection: process.env.PG_CONNECTION_STRING,
-  searchPath: ['knex', 'public'],
-});
+
 const args = process.argv.slice(2);
 
 const searchPerson = (name) => {
-  knex.select('*').from('famous_people').where('first_name', 'LIKE', 'name').orWhere('last_name', 'LIKE', 'name')
+  knex.select('*').from('famous_people').where('first_name', name).orWhere('last_name', name)
     .then((res) => {
       outputText(res);
     })
